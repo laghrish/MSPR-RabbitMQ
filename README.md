@@ -55,3 +55,33 @@ docker-compose up --build
 - **API Clients** : [Documentation et Procédure](https://github.com/Cortexico/MSPR-API-Clients)
 - **API Produits** : [Documentation et Procédure](https://github.com/Cortexico/MSPR-API-Produits)
 - **API Commandes** : [Documentation et Procédure](https://github.com/Cortexico/MSPR-API-Commandes)
+
+
+Parfait, voici une **explication simple à ajouter dans le README** (dans la section Kubernetes par exemple), comme pour les autres APIs :
+
+---
+
+### Fichiers ajoutés pour Kubernetes
+
+Pour permettre le déploiement de RabbitMQ dans un cluster Kubernetes, les fichiers suivants ont été ajoutés :
+
+- `rabbitmq-deployment.yaml` : Déploie un conteneur RabbitMQ avec l’image officielle `rabbitmq:3-management`, incluant l’interface web d’administration.
+- `rabbitmq-service.yaml` : Crée un service de type `NodePort` pour exposer RabbitMQ à l’extérieur du cluster :
+  - Port **5672** : utilisé pour les communications AMQP entre services.
+  - Port **15672** : permet d’accéder à l’interface d’administration Web RabbitMQ.
+
+### Exemple de commande de déploiement :
+```bash
+kubectl apply -f rabbitmq-deployment.yaml
+kubectl apply -f rabbitmq-service.yaml
+```
+
+Une fois déployé, l’interface web est accessible à l’adresse :
+```bash
+http://<minikube_ip>:<nodePort>
+```
+avec les identifiants :
+```
+Username: guest
+Password: guest
+```
